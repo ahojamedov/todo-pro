@@ -1,8 +1,32 @@
-node_modules/
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
 build/
-dist/
-coverage/
-.DS_Store
+
+# Android
+.gradle/
+local.properties
+**/GeneratedPluginRegistrant.java
+*.keystore
+*.jks
+*.properties
+build/
+
+# iOS
+.generated/
+DerivedData/
+Pods/
+Runner.xcworkspace
+!Runner.xcworkspace/contents.xcworkspacedata
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Logs
 *.log
-.env*
-!.env.example
