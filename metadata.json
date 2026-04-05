@@ -1,0 +1,5 @@
+{
+  "name": "Supabase Todo Pro",
+  "description": "A professional Todo application with Supabase Auth and CRUD, built with Clean Architecture.",
+  "requestFramePermissions": []
+}
