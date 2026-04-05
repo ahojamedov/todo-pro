@@ -23,6 +23,60 @@ Color getTextColor(String theme) => theme == 'dark' ? Colors.white : Colors.blac
 const Color colorTextSecondary = Color(0xFF8E8E93);
 const Color colorAccent = Color(0xFF7B78FF); 
 
+String translate(String key, String lang) {
+  final translations = {
+    'ru': {
+      'title': 'Мои задачи', 'all': 'Все', 'today': 'Сегодня', 'high': 'Важные', 'done': 'Готово',
+      'stats_total': 'всего задач', 'stats_done': 'выполнено', 'on_today': 'На сегодня', 'all_arrow': 'все →',
+      'add_task': 'Добавить задачу', 'profile': 'Профиль', 'home': 'Главная', 'calendar': 'Календарь', 'search': 'Поиск',
+      'search_hint': 'Поиск заметок...',
+      'settings': 'Настройки интерфейса', 'theme': 'Темная тема', 'font': 'Размер шрифта', 'color': 'Цвет акцента', 'lang': 'Язык приложения',
+      'progress': 'Прогресс', 'quote_loading': 'Загрузка мотивации...', 'quote_error': 'Продолжай! Ты отлично справляешься!',
+      'calendar_hint': 'Нажмите на день с задачами', 'edit_task': 'Редактировать задачу', 'no_tasks': 'Нет задач',
+      'username': 'Имя пользователя', 'save': 'Сохранить',
+      'new_note': 'Новая заметка', 'text_mode': 'Текст', 'list_mode': 'Список',
+      'title_hint': 'Заголовок', 'text_hint': 'Текст заметки...', 'add_item': 'Добавить пункт'
+    },
+    'en': {
+      'title': 'My Tasks', 'all': 'All', 'today': 'Today', 'high': 'Important', 'done': 'Done',
+      'stats_total': 'total tasks', 'stats_done': 'completed', 'on_today': 'For today', 'all_arrow': 'all →',
+      'add_task': 'Add Task', 'profile': 'Profile', 'home': 'Home', 'calendar': 'Calendar', 'search': 'Search',
+      'search_hint': 'Search notes...',
+      'settings': 'Interface Settings', 'theme': 'Dark Theme', 'font': 'Font Size', 'color': 'Accent Color', 'lang': 'App Language',
+      'progress': 'Progress', 'quote_loading': 'Loading motivation...', 'quote_error': 'Keep going! You are doing great!',
+      'calendar_hint': 'Tap on a day with tasks', 'edit_task': 'Edit Task', 'no_tasks': 'No tasks',
+      'username': 'Username', 'save': 'Save',
+      'new_note': 'New Note', 'text_mode': 'Text', 'list_mode': 'List',
+      'title_hint': 'Title', 'text_hint': 'Note text...', 'add_item': 'Add item'
+    },
+    'tk': {
+      'title': 'Meniň işlerim', 'all': 'Hemmesi', 'today': 'Şügün', 'high': 'Wajyp', 'done': 'Taýýar',
+      'stats_total': 'ählisi', 'stats_done': 'ýerine ýetirildi', 'on_today': 'Şügün üçin', 'all_arrow': 'hemmesi →',
+      'add_task': 'Iş goş', 'profile': 'Profil', 'home': 'Baş sahypa', 'calendar': 'Seneleýin', 'search': 'Gözleg',
+      'search_hint': 'Gözleg...',
+      'settings': 'Interfeýs sazlamalary', 'theme': 'Gije tertibi', 'font': 'Şriftiň ölçegi', 'color': 'Akcent reňki', 'lang': 'Programma dili',
+      'progress': 'Ösüş', 'quote_loading': 'Motivasiýa ýüklenýär...', 'quote_error': 'Dowam et! Sen gowy başarýarsyň!',
+      'calendar_hint': 'Işli günleriň üstüne basyň', 'edit_task': 'Işi üýtget', 'no_tasks': 'Iş ýok',
+      'username': 'Ulanyjy ady', 'save': 'Sakla',
+      'new_note': 'Täze ýazgy', 'text_mode': 'Tekst', 'list_mode': 'Sanaw',
+      'title_hint': 'Sözbaşy', 'text_hint': 'Ýazgy tekst...', 'add_item': 'Bent goş'
+    },
+    'zh': {
+      'title': '我的任务', 'all': '全部', 'today': '今天', 'high': '重要', 'done': '完成',
+      'stats_total': '总计', 'stats_done': '已完成', 'on_today': '今日任务', 'all_arrow': '全部 →',
+      'add_task': '添加任务', 'profile': '我的', 'home': '首页', 'calendar': '日历', 'search': '搜索',
+      'search_hint': '搜索笔记...',
+      'settings': '界面设置', 'theme': '深色模式', 'font': '字体大小', 'color': '主题颜色', 'lang': '语言',
+      'progress': '统计', 'quote_loading': '正在加载动力...', 'quote_error': '继续加油！你做得很棒！',
+      'calendar_hint': '点击有任务的日期', 'edit_task': '编辑任务', 'no_tasks': '没有任务',
+      'username': '用户名', 'save': '保存',
+      'new_note': '新笔记', 'text_mode': '文本', 'list_mode': '列表',
+      'title_hint': '标题', 'text_hint': '笔记内容...', 'add_item': '添加项目'
+    }
+  };
+  return translations[lang]?[key] ?? key;
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
@@ -30,6 +84,7 @@ void main() async {
   await initializeDateFormatting('ru', null);
   await initializeDateFormatting('en', null);
   await initializeDateFormatting('zh', null);
+  try { await initializeDateFormatting('tk', null); } catch (_) {}
 
   // Инициализация уведомлений в фоновом режиме, чтобы не вешать приложение
   _initNotifications();
@@ -123,7 +178,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
+    // Увеличили задержку до 2 секунд для более плавного входа
+    Future.delayed(const Duration(milliseconds: 2000), () {
       if (mounted) {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
@@ -413,48 +469,21 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-  String _filter = 'Hemmesi';
+  String _filter = 'all';
+  String _searchQuery = '';
+  bool _isSearching = false;
 
   String t(String key, TodoProvider prov) {
-    final translations = {
-      'ru': {
-        'title': 'Мои задачи', 'all': 'Все', 'today': 'Сегодня', 'high': 'Важные', 'done': 'Готово',
-        'stats_total': 'всего задач', 'stats_done': 'выполнено', 'on_today': 'На сегодня', 'all_arrow': 'все →',
-        'add_task': 'Добавить задачу', 'profile': 'Профиль', 'home': 'Главная', 'calendar': 'Календарь', 'search': 'Поиск',
-        'settings': 'Настройки интерфейса', 'theme': 'Темная тема', 'font': 'Размер шрифта', 'color': 'Цвет акцента', 'lang': 'Язык приложения',
-        'progress': 'Прогресс', 'quote_loading': 'Загрузка мотивации...', 'quote_error': 'Продолжай! Ты отлично справляешься!',
-        'calendar_hint': 'Нажмите на день с задачами', 'edit_task': 'Редактировать задачу', 'no_tasks': 'Нет задач',
-        'username': 'Имя пользователя', 'save': 'Сохранить'
-      },
-      'en': {
-        'title': 'My Tasks', 'all': 'All', 'today': 'Today', 'high': 'Important', 'done': 'Done',
-        'stats_total': 'total tasks', 'stats_done': 'completed', 'on_today': 'For today', 'all_arrow': 'all →',
-        'add_task': 'Add Task', 'profile': 'Profile', 'home': 'Home', 'calendar': 'Calendar', 'search': 'Search',
-        'settings': 'Interface Settings', 'theme': 'Dark Theme', 'font': 'Font Size', 'color': 'Accent Color', 'lang': 'App Language',
-        'progress': 'Progress', 'quote_loading': 'Loading motivation...', 'quote_error': 'Keep going! You are doing great!',
-        'calendar_hint': 'Tap on a day with tasks', 'edit_task': 'Edit Task', 'no_tasks': 'No tasks',
-        'username': 'Username', 'save': 'Save'
-      },
-      'tk': {
-        'title': 'Meniň işlerim', 'all': 'Hemmesi', 'today': 'Şügün', 'high': 'Wajyp', 'done': 'Taýýar',
-        'stats_total': 'ählisi', 'stats_done': 'ýerine ýetirildi', 'on_today': 'Şügün üçin', 'all_arrow': 'hemmesi →',
-        'add_task': 'Iş goş', 'profile': 'Profil', 'home': 'Baş sahypa', 'calendar': 'Seneleýin', 'search': 'Gözleg',
-        'settings': 'Interfeýs sazlamalary', 'theme': 'Gije tertibi', 'font': 'Şriftiň ölçegi', 'color': 'Akcent reňki', 'lang': 'Programma dili',
-        'progress': 'Ösüş', 'quote_loading': 'Motivasiýa ýüklenýär...', 'quote_error': 'Dowam et! Sen gowy başarýarsyň!',
-        'calendar_hint': 'Işli günleriň üstüne basyň', 'edit_task': 'Işi üýtget', 'no_tasks': 'Iş ýok',
-        'username': 'Ulanyjy ady', 'save': 'Sakla'
-      },
-      'zh': {
-        'title': '我的任务', 'all': '全部', 'today': '今天', 'high': '重要', 'done': '完成',
-        'stats_total': '总计', 'stats_done': '已完成', 'on_today': '今日任务', 'all_arrow': '全部 →',
-        'add_task': '添加任务', 'profile': '我的', 'home': '首页', 'calendar': '日历', 'search': '搜索',
-        'settings': '界面设置', 'theme': '深色模式', 'font': '字体大小', 'color': '主题颜色', 'lang': '语言',
-        'progress': '统计', 'quote_loading': '正在加载动力...', 'quote_error': '继续加油！你做得很棒！',
-        'calendar_hint': '点击有任务的日期', 'edit_task': '编辑任务', 'no_tasks': '没有任务',
-        'username': '用户名', 'save': '保存'
-      }
-    };
-    return translations[prov.language]?[key] ?? key;
+    return translate(key, prov.language);
+  }
+
+  String _formatTkDate(DateTime date) {
+    final days = ['Ýekşenbe', 'Duşenbe', 'Sişenbe', 'Çarşenbe', 'Penşenbe', 'Juma', 'Şenbe'];
+    final months = [
+      'Ýanwar', 'Fewral', 'Mart', 'Aprel', 'Maý', 'Iýun',
+      'Iýul', 'Awgust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'
+    ];
+    return "${days[date.weekday % 7]}, ${date.day} ${months[date.month - 1]}".toUpperCase();
   }
 
   @override
@@ -462,16 +491,20 @@ class _MainScreenState extends State<MainScreen> {
     final prov = context.watch<TodoProvider>();
     final now = DateTime.now();
     String dateStr;
-    try {
-      dateStr = DateFormat('EEEE, d MMMM', prov.language == 'tk' ? 'en' : prov.language).format(now).toUpperCase();
-    } catch (e) {
-      dateStr = DateFormat('EEEE, d MMMM', 'en').format(now).toUpperCase();
+    if (prov.language == 'tk') {
+      dateStr = _formatTkDate(now);
+    } else {
+      try {
+        dateStr = DateFormat('EEEE, d MMMM', prov.language).format(now).toUpperCase();
+      } catch (e) {
+        dateStr = DateFormat('EEEE, d MMMM', 'en').format(now).toUpperCase();
+      }
     }
 
     final List<Widget> pages = [
       _buildHome(prov, dateStr),
       _buildCalendar(prov),
-      _buildProgress(prov),
+      _buildDone(prov),
       _buildProfile(context, prov),
     ];
 
@@ -488,29 +521,97 @@ class _MainScreenState extends State<MainScreen> {
         items: [
           BottomNavigationBarItem(icon: const Icon(Icons.home_filled), label: t('home', prov)),
           BottomNavigationBarItem(icon: const Icon(Icons.calendar_today_rounded), label: t('calendar', prov)),
-          BottomNavigationBarItem(icon: const Icon(Icons.bar_chart_rounded), label: t('progress', prov)),
+          BottomNavigationBarItem(icon: const Icon(Icons.check_circle_outline), label: t('done', prov)),
           BottomNavigationBarItem(icon: const Icon(Icons.person_outline_rounded), label: t('profile', prov)),
         ],
       ),
       floatingActionButton: _currentIndex == 0 ? FloatingActionButton(
-        onPressed: () => _showAddSheet(context, prov),
+        onPressed: () => _showTypeSelection(context, prov),
         backgroundColor: prov.accentColor,
         child: const Icon(Icons.add, color: Colors.white, size: 30),
       ) : null,
     );
   }
 
+  void _showTypeSelection(BuildContext context, TodoProvider prov) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: getCardColor(prov.theme),
+        title: Text(translate('new_note', prov.language), style: TextStyle(color: getTextColor(prov.theme))),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.text_fields, color: prov.accentColor),
+              title: Text(translate('text_mode', prov.language), style: TextStyle(color: getTextColor(prov.theme))),
+              onTap: () async {
+                Navigator.pop(ctx);
+                await Navigator.push(context, MaterialPageRoute(builder: (_) => const NoteEditorPage(initialType: 'text')));
+                prov.fetchTasks();
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.list, color: prov.accentColor),
+              title: Text(translate('list_mode', prov.language), style: TextStyle(color: getTextColor(prov.theme))),
+              onTap: () async {
+                Navigator.pop(ctx);
+                await Navigator.push(context, MaterialPageRoute(builder: (_) => const NoteEditorPage(initialType: 'list')));
+                prov.fetchTasks();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildHome(TodoProvider prov, String dateStr) {
     final now = DateTime.now();
     final filteredTasks = prov.tasks.where((task) {
-      if (_filter == t('all', prov)) return true;
-      if (_filter == t('today', prov)) {
-        if (task['due_date'] == null) return false;
-        final d = DateTime.parse(task['due_date']);
-        return d.day == now.day && d.month == now.month && d.year == now.year;
+      // Сначала фильтрация по поиску
+      if (_searchQuery.isNotEmpty) {
+        final title = (task['title'] ?? '').toString().toLowerCase();
+        final desc = (task['description'] ?? '').toString().toLowerCase();
+        final subtasksRaw = (task['subtasks'] ?? '[]').toString();
+        bool subtasksMatch = false;
+        try {
+          final List sub = jsonDecode(subtasksRaw);
+          subtasksMatch = sub.any((item) => (item['text'] ?? '').toString().toLowerCase().contains(_searchQuery.toLowerCase()));
+        } catch (_) {}
+        
+        if (!title.contains(_searchQuery.toLowerCase()) && 
+            !desc.contains(_searchQuery.toLowerCase()) &&
+            !subtasksMatch) {
+          return false;
+        }
       }
-      if (_filter == t('high', prov)) return task['priority'] == 'high';
-      if (_filter == t('done', prov)) return task['is_completed'] == 1;
+
+      final isCompleted = task['is_completed'] == 1;
+
+      if (_filter == 'all') return !isCompleted; // Показываем только активные в общем списке
+      
+      if (_filter == 'today') {
+        final dueDateStr = task['due_date'];
+        final createdAtStr = task['created_at'];
+        
+        DateTime? compareDate;
+        if (dueDateStr != null && dueDateStr.isNotEmpty) {
+          compareDate = DateTime.tryParse(dueDateStr);
+        } else if (createdAtStr != null && createdAtStr.isNotEmpty) {
+          compareDate = DateTime.tryParse(createdAtStr);
+        }
+        
+        if (compareDate == null) return false;
+        final isSameDay = compareDate.day == now.day && 
+                          compareDate.month == now.month && 
+                          compareDate.year == now.year;
+        
+        return isSameDay && !isCompleted; // В "Сегодня" только активные
+      }
+      
+      if (_filter == 'high') return task['priority'] == 'high' && !isCompleted; // В "Важные" только активные
+      if (_filter == 'done') return isCompleted; // В "Готово" только выполненные
       return true;
     }).toList();
 
@@ -523,25 +624,57 @@ class _MainScreenState extends State<MainScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(dateStr, style: const TextStyle(color: colorTextSecondary, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
-                    const SizedBox(height: 4),
-                    Text(t('title', prov), style: TextStyle(color: getTextColor(prov.theme), fontSize: 32, fontWeight: FontWeight.w900, letterSpacing: -1)),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () => setState(() => _currentIndex = 3),
-                  child: CircleAvatar(
-                    radius: 24,
-                    backgroundColor: prov.accentColor,
-                    child: Text(
-                      prov.userName.isNotEmpty ? prov.userName[0].toUpperCase() : '?',
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                if (!_isSearching)
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(dateStr, style: const TextStyle(color: colorTextSecondary, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+                        const SizedBox(height: 4),
+                        Text(t('title', prov), style: TextStyle(color: getTextColor(prov.theme), fontSize: 32, fontWeight: FontWeight.w900, letterSpacing: -1)),
+                      ],
                     ),
                   ),
+                if (_isSearching)
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: getCardColor(prov.theme),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: TextField(
+                        autofocus: true,
+                        style: TextStyle(color: getTextColor(prov.theme)),
+                        decoration: InputDecoration(
+                          hintText: t('search_hint', prov),
+                          hintStyle: const TextStyle(color: colorTextSecondary),
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (v) => setState(() => _searchQuery = v),
+                      ),
+                    ),
+                  ),
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: Icon(_isSearching ? Icons.close : Icons.search, color: getTextColor(prov.theme)),
+                  onPressed: () => setState(() {
+                    _isSearching = !_isSearching;
+                    if (!_isSearching) _searchQuery = '';
+                  }),
                 ),
+                if (!_isSearching)
+                  GestureDetector(
+                    onTap: () => setState(() => _currentIndex = 3),
+                    child: CircleAvatar(
+                      radius: 24,
+                      backgroundColor: prov.accentColor,
+                      child: Text(
+                        prov.userName.isNotEmpty ? prov.userName[0].toUpperCase() : '?',
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
@@ -551,13 +684,13 @@ class _MainScreenState extends State<MainScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  _Tab(label: t('all', prov), isActive: _filter == t('all', prov), onTap: () => setState(() => _filter = t('all', prov))),
+                  _Tab(label: t('all', prov), isActive: _filter == 'all', onTap: () => setState(() => _filter = 'all')),
                   const SizedBox(width: 10),
-                  _Tab(label: t('today', prov), isActive: _filter == t('today', prov), onTap: () => setState(() => _filter = t('today', prov))),
+                  _Tab(label: t('today', prov), isActive: _filter == 'today', onTap: () => setState(() => _filter = 'today')),
                   const SizedBox(width: 10),
-                  _Tab(label: t('high', prov), isActive: _filter == t('high', prov), onTap: () => setState(() => _filter = t('high', prov))),
+                  _Tab(label: t('high', prov), isActive: _filter == 'high', onTap: () => setState(() => _filter = 'high')),
                   const SizedBox(width: 10),
-                  _Tab(label: t('done', prov), isActive: _filter == t('done', prov), onTap: () => setState(() => _filter = t('done', prov))),
+                  _Tab(label: t('done', prov), isActive: _filter == 'done', onTap: () => setState(() => _filter = 'done')),
                 ],
               ),
             ),
@@ -579,8 +712,11 @@ class _MainScreenState extends State<MainScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(t('on_today', prov), style: TextStyle(color: getTextColor(prov.theme), fontSize: 20, fontWeight: FontWeight.bold)),
-                Text(t('all_arrow', prov), style: const TextStyle(color: colorTextSecondary, fontSize: 14)),
+                Text(
+                  _filter == 'all' ? t('all', prov) : (_filter == 'today' ? t('on_today', prov) : t(_filter, prov)),
+                  style: TextStyle(color: getTextColor(prov.theme), fontSize: 20, fontWeight: FontWeight.bold)
+                ),
+                if (_filter == 'all') Text(t('all_arrow', prov), style: const TextStyle(color: colorTextSecondary, fontSize: 14)),
               ],
             ),
           ),
@@ -595,7 +731,10 @@ class _MainScreenState extends State<MainScreen> {
                     return _TaskTile(
                       task: task, 
                       prov: prov,
-                      onTap: () => _showAddSheet(context, prov, existingTask: task),
+                      onTap: () async {
+                        await Navigator.push(context, MaterialPageRoute(builder: (_) => NoteEditorPage(task: task)));
+                        prov.fetchTasks();
+                      },
                     );
                   },
                 ),
@@ -609,11 +748,13 @@ class _MainScreenState extends State<MainScreen> {
     final now = DateTime.now();
     final Map<int, List<Map>> tasksByDay = {};
     for (var task in prov.tasks) {
-      if (task['due_date'] != null) {
-        final d = DateTime.parse(task['due_date']);
-        if (d.month == now.month && d.year == now.year) {
-          tasksByDay.putIfAbsent(d.day, () => []).add(task);
-        }
+      if (task['due_date'] != null && task['due_date'].isNotEmpty) {
+        try {
+          final d = DateTime.parse(task['due_date']);
+          if (d.month == now.month && d.year == now.year) {
+            tasksByDay.putIfAbsent(d.day, () => []).add(task);
+          }
+        } catch (_) {}
       }
     }
 
@@ -639,7 +780,7 @@ class _MainScreenState extends State<MainScreen> {
                   onTap: hasTask ? () => _showDayTasks(context, day, tasksOnDay, prov) : null,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: hasTask ? prov.accentColor.withOpacity(0.8) : getCardColor(prov.theme),
+                      color: hasTask ? prov.accentColor : getCardColor(prov.theme),
                       borderRadius: BorderRadius.circular(12),
                       border: isToday ? Border.all(color: prov.accentColor, width: 2) : null,
                       boxShadow: hasTask ? [BoxShadow(color: prov.accentColor.withOpacity(0.3), blurRadius: 4)] : null,
@@ -698,7 +839,7 @@ class _MainScreenState extends State<MainScreen> {
                     prov: prov,
                     onTap: () {
                       Navigator.pop(context); // Close day tasks sheet
-                      _showAddSheet(context, prov, existingTask: tasks[i]);
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => NoteEditorPage(task: tasks[i])));
                     },
                   ),
                 ),
@@ -706,6 +847,41 @@ class _MainScreenState extends State<MainScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDone(TodoProvider prov) {
+    final doneTasks = prov.tasks.where((t) => t['is_completed'] == 1).toList();
+
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            child: Text(t('done', prov), style: TextStyle(color: getTextColor(prov.theme), fontSize: 32, fontWeight: FontWeight.w900, letterSpacing: -1)),
+          ),
+          Expanded(
+            child: doneTasks.isEmpty
+                ? Center(child: Text(t('no_tasks', prov), style: TextStyle(color: colorTextSecondary)))
+                : ListView.builder(
+              padding: const EdgeInsets.all(24),
+              itemCount: doneTasks.length,
+              itemBuilder: (ctx, i) {
+                final task = doneTasks[i];
+                return _TaskTile(
+                  task: task,
+                  prov: prov,
+                  onTap: () async {
+                    await Navigator.push(context, MaterialPageRoute(builder: (_) => NoteEditorPage(task: task)));
+                    prov.fetchTasks();
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -853,107 +1029,6 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  void _showAddSheet(BuildContext context, TodoProvider prov, {Map? existingTask}) {
-    final ctrl = TextEditingController(text: existingTask?['title'] ?? '');
-    bool isHighPriority = existingTask?['priority'] == 'high';
-    DateTime? selectedDate = existingTask?['due_date'] != null ? DateTime.parse(existingTask!['due_date']) : null;
-    TimeOfDay? selectedTime = selectedDate != null ? TimeOfDay.fromDateTime(selectedDate) : null;
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: getCardColor(prov.theme),
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
-      builder: (ctx) => StatefulBuilder(
-        builder: (context, setModalState) {
-          return Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom, left: 24, right: 24, top: 32),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: ctrl,
-                  autofocus: true,
-                  style: TextStyle(fontSize: 20, color: getTextColor(prov.theme)),
-                  decoration: InputDecoration(hintText: existingTask == null ? (prov.language == 'ru' ? 'Что планируете?' : 'What are you planning?') : t('edit_task', prov), border: InputBorder.none),
-                ),
-                if (selectedDate != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.event, size: 16, color: colorAccent),
-                        const SizedBox(width: 8),
-                        Text(
-                          '${DateFormat('d MMMM', prov.language == 'tk' ? 'en' : prov.language).format(selectedDate!)}${selectedTime != null ? ' в ${selectedTime!.hour.toString().padLeft(2, '0')}:${selectedTime!.minute.toString().padLeft(2, '0')}' : ''}',
-                          style: const TextStyle(color: colorAccent, fontWeight: FontWeight.bold),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.close, size: 16, color: Colors.red),
-                          onPressed: () => setModalState(() { selectedDate = null; selectedTime = null; }),
-                        )
-                      ],
-                    ),
-                  ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () async {
-                            final d = await showDatePicker(context: context, initialDate: selectedDate ?? DateTime.now(), firstDate: DateTime.now().subtract(const Duration(days: 365)), lastDate: DateTime.now().add(const Duration(days: 365)));
-                            if (d != null) {
-                              final t = await showTimePicker(
-                                context: context, 
-                                initialTime: selectedTime ?? TimeOfDay.now(),
-                                builder: (context, child) {
-                                  return MediaQuery(
-                                    data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-                                    child: child!,
-                                  );
-                                },
-                              );
-                              setModalState(() { selectedDate = d; selectedTime = t; });
-                            }
-                          },
-                          icon: Icon(Icons.calendar_today, color: prov.accentColor),
-                        ),
-                        IconButton(
-                          onPressed: () => setModalState(() => isHighPriority = !isHighPriority),
-                          icon: Icon(isHighPriority ? Icons.star : Icons.star_border, color: isHighPriority ? Colors.orange : colorTextSecondary),
-                        ),
-                      ],
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (ctrl.text.isNotEmpty) {
-                          DateTime? finalDate;
-                          if (selectedDate != null) {
-                            finalDate = DateTime(selectedDate!.year, selectedDate!.month, selectedDate!.day, selectedTime?.hour ?? 9, selectedTime?.minute ?? 0);
-                          }
-                          if (existingTask == null) {
-                            prov.addTask(ctrl.text, priority: isHighPriority ? 'high' : 'low', dueDate: finalDate);
-                          } else {
-                            prov.updateTask(existingTask['id'], ctrl.text, priority: isHighPriority ? 'high' : 'low', dueDate: finalDate);
-                          }
-                          Navigator.pop(ctx);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(backgroundColor: prov.accentColor, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                      child: Text(existingTask == null ? t('add_task', prov).split(' ').first : 'ОК'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-              ],
-            ),
-          );
-        }
-      ),
-    );
-  }
-
   void _showNameEdit(BuildContext context, TodoProvider prov) {
     final ctrl = TextEditingController(text: prov.userName);
     showModalBottomSheet(
@@ -1023,6 +1098,205 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
+class NoteEditorPage extends StatefulWidget {
+  final Map? task;
+  final String initialType;
+  const NoteEditorPage({super.key, this.task, this.initialType = 'text'});
+
+  @override
+  State<NoteEditorPage> createState() => _NoteEditorPageState();
+}
+
+class _NoteEditorPageState extends State<NoteEditorPage> {
+  late TextEditingController _titleController;
+  late TextEditingController _descController;
+  late List<Map<String, dynamic>> _subtasks;
+  bool _isHighPriority = false;
+  DateTime? _dueDate;
+  bool _isSaved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(text: widget.task?['title'] ?? '');
+    _descController = TextEditingController(text: widget.task?['description'] ?? '');
+    _subtasks = List<Map<String, dynamic>>.from(jsonDecode(widget.task?['subtasks'] ?? '[]'));
+    _isHighPriority = widget.task?['priority'] == 'high';
+    _dueDate = widget.task?['due_date'] != null ? DateTime.parse(widget.task!['due_date']) : null;
+  }
+
+  Future<void> _save(TodoProvider prov) async {
+    if (_isSaved) return;
+    
+    final titleText = _titleController.text.trim();
+    final descText = _descController.text.trim();
+    
+    if (titleText.isEmpty && descText.isEmpty && _subtasks.isEmpty) {
+      setState(() => _isSaved = true);
+      return;
+    }
+    
+    setState(() => _isSaved = true);
+    final title = titleText.isEmpty ? 'Без названия' : titleText;
+    if (widget.task == null) {
+      await prov.addTask(
+        title,
+        description: _descController.text,
+        type: widget.initialType,
+        subtasks: jsonEncode(_subtasks),
+        priority: _isHighPriority ? 'high' : 'low',
+        dueDate: _dueDate,
+      );
+    } else {
+      await prov.updateTask(
+        widget.task!['id'],
+        title,
+        description: _descController.text,
+        type: widget.task!['type'] ?? 'text',
+        subtasks: jsonEncode(_subtasks),
+        priority: _isHighPriority ? 'high' : 'low',
+        dueDate: _dueDate,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final prov = context.read<TodoProvider>();
+    final isDark = prov.theme == 'dark';
+    final type = widget.task?['type'] ?? widget.initialType;
+
+    return PopScope(
+      canPop: _isSaved,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        await _save(prov);
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: getBgColor(prov.theme),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new, color: getTextColor(prov.theme)),
+            onPressed: () async {
+              await _save(prov);
+              if (mounted) Navigator.pop(context);
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(_isHighPriority ? Icons.star : Icons.star_border, color: _isHighPriority ? Colors.orange : getTextColor(prov.theme)),
+              onPressed: () => setState(() => _isHighPriority = !_isHighPriority),
+            ),
+            IconButton(
+              icon: Icon(Icons.calendar_today, color: _dueDate != null ? prov.accentColor : getTextColor(prov.theme)),
+              onPressed: () async {
+                final d = await showDatePicker(context: context, initialDate: _dueDate ?? DateTime.now(), firstDate: DateTime.now().subtract(const Duration(days: 365)), lastDate: DateTime.now().add(const Duration(days: 365)));
+                if (d != null) {
+                  final t = await showTimePicker(context: context, initialTime: TimeOfDay.fromDateTime(_dueDate ?? DateTime.now()));
+                  if (t != null) {
+                    setState(() => _dueDate = DateTime(d.year, d.month, d.day, t.hour, t.minute));
+                  }
+                }
+              },
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                controller: _titleController,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: getTextColor(prov.theme)),
+                decoration: InputDecoration(
+                  hintText: translate('title_hint', prov.language),
+                  hintStyle: TextStyle(color: colorTextSecondary.withOpacity(0.5)),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            Expanded(
+              child: type == 'text' 
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextField(
+                      controller: _descController,
+                      maxLines: null,
+                      style: TextStyle(fontSize: 18, color: getTextColor(prov.theme)),
+                      decoration: InputDecoration(
+                        hintText: translate('text_hint', prov.language),
+                        hintStyle: TextStyle(color: colorTextSecondary.withOpacity(0.5)),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  )
+                : ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    children: [
+                      ..._subtasks.asMap().entries.map((entry) {
+                        int idx = entry.key;
+                        return Row(
+                          children: [
+                            Checkbox(
+                              value: entry.value['completed'],
+                              activeColor: prov.accentColor,
+                              onChanged: (v) => setState(() => _subtasks[idx]['completed'] = v),
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                key: ValueKey('task_$idx'),
+                                initialValue: entry.value['text'],
+                                style: TextStyle(
+                                  color: getTextColor(prov.theme),
+                                  decoration: entry.value['completed'] ? TextDecoration.lineThrough : null,
+                                ),
+                                decoration: const InputDecoration(border: InputBorder.none),
+                                onFieldSubmitted: (val) {
+                                  setState(() => _subtasks[idx]['text'] = val);
+                                },
+                                onChanged: (val) => _subtasks[idx]['text'] = val,
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.close, size: 20, color: Colors.redAccent),
+                              onPressed: () => setState(() => _subtasks.removeAt(idx)),
+                            ),
+                          ],
+                        );
+                      }),
+                      const SizedBox(height: 10),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton.icon(
+                          onPressed: () => setState(() => _subtasks.add({'text': '', 'completed': false})),
+                          icon: const Icon(Icons.add),
+                          label: Text(translate('add_item', prov.language)),
+                          style: TextButton.styleFrom(foregroundColor: prov.accentColor),
+                        ),
+                      ),
+                    ],
+                  ),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await _save(prov);
+            if (mounted) Navigator.pop(context);
+          },
+          backgroundColor: prov.accentColor,
+          child: const Icon(Icons.check, color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
 class _TaskTile extends StatelessWidget {
   final Map task;
   final TodoProvider prov;
@@ -1032,6 +1306,23 @@ class _TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDone = task['is_completed'] == 1;
+    final type = task['type'] ?? 'text';
+    String subtitleText = '';
+    
+    if (type == 'text') {
+      subtitleText = task['description'] ?? '';
+    } else {
+      try {
+        final List subtasks = jsonDecode(task['subtasks'] ?? '[]');
+        if (subtasks.isNotEmpty) {
+          final doneCount = subtasks.where((s) => s['completed'] == true).length;
+          subtitleText = '$doneCount / ${subtasks.length}';
+        }
+      } catch (_) {
+        subtitleText = '';
+      }
+    }
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(color: getCardColor(prov.theme), borderRadius: BorderRadius.circular(20)),
@@ -1054,13 +1345,22 @@ class _TaskTile extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (task['due_date'] != null)
+            if (subtitleText.isNotEmpty)
+              Text(subtitleText, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: colorTextSecondary, fontSize: 13)),
+            if (task['due_date'] != null && task['due_date'].isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  DateFormat('d MMMM HH:mm', prov.language == 'tk' ? 'en' : prov.language).format(DateTime.parse(task['due_date'])),
-                  style: TextStyle(color: prov.accentColor, fontSize: 12),
-                ),
+                child: Builder(builder: (context) {
+                  try {
+                    final date = DateTime.parse(task['due_date']);
+                    return Text(
+                      DateFormat('d MMMM HH:mm', prov.language == 'tk' ? 'en' : prov.language).format(date),
+                      style: TextStyle(color: prov.accentColor, fontSize: 12),
+                    );
+                  } catch (_) {
+                    return const SizedBox.shrink();
+                  }
+                }),
               ),
           ],
         ),
@@ -1124,6 +1424,7 @@ class _StatCard extends StatelessWidget {
 }
 
 class TodoProvider extends ChangeNotifier {
+  static Database? _db;
   List<Map> _tasks = [];
   String _theme = 'dark';
   double _fontSize = 18;
@@ -1146,7 +1447,6 @@ class TodoProvider extends ChangeNotifier {
     _language = prefs.getString('language') ?? 'ru';
     _userName = prefs.getString('user_name') ?? 'User';
     await fetchTasks();
-    notifyListeners();
   }
 
   void setTheme(String t) { _theme = t; _save('theme', t); notifyListeners(); }
@@ -1165,13 +1465,8 @@ class TodoProvider extends ChangeNotifier {
         final data = json.decode(response.body);
         String quote = data['content'];
         String author = data['author'];
-        
         if (language == 'en') return '\"$quote\" — $author';
-        
-        final transRes = await http.get(Uri.parse(
-          'https://api.mymemory.translated.net/get?q=${Uri.encodeComponent(quote)}&langpair=en|${language == 'tk' ? 'tr' : language}'
-        )).timeout(const Duration(seconds: 3));
-        
+        final transRes = await http.get(Uri.parse('https://api.mymemory.translated.net/get?q=${Uri.encodeComponent(quote)}&langpair=en|${language == 'tk' ? 'tr' : language}')).timeout(const Duration(seconds: 3));
         if (transRes.statusCode == 200) {
           final transData = json.decode(transRes.body);
           String translated = transData['responseData']['translatedText'];
@@ -1180,7 +1475,6 @@ class TodoProvider extends ChangeNotifier {
         return '\"$quote\" — $author';
       }
     } catch (_) {}
-    
     final fallbacks = {
       'ru': 'Твоё ограничение — это только твоё воображение.',
       'en': "Your limitation—it's only your imagination.",
@@ -1197,96 +1491,114 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<Database> _getDb() async {
+    if (_db != null && _db!.isOpen) return _db!;
+    final dbPath = await getDatabasesPath();
+    final path = p.join(dbPath, 'todo_safe.db');
+    debugPrint("Opening database at $path");
+    _db = await openDatabase(
+      path,
+      version: 8,
+      onCreate: (db, v) async {
+        debugPrint("Creating tasks table (v$v)");
+        await db.execute('CREATE TABLE tasks(id TEXT PRIMARY KEY, title TEXT, description TEXT, type TEXT, subtasks TEXT, is_completed INTEGER, priority TEXT, created_at TEXT, due_date TEXT)');
+      },
+      onUpgrade: (db, oldV, newV) async {
+        debugPrint("Upgrading database from $oldV to $newV");
+        var columns = await db.rawQuery('PRAGMA table_info(tasks)');
+        var names = columns.map((c) => c['name'] as String).toList();
+        final required = {
+          'title': 'TEXT',
+          'description': 'TEXT',
+          'type': 'TEXT DEFAULT "text"',
+          'subtasks': 'TEXT',
+          'is_completed': 'INTEGER DEFAULT 0',
+          'priority': 'TEXT DEFAULT "low"',
+          'created_at': 'TEXT',
+          'due_date': 'TEXT'
+        };
+        for (var col in required.entries) {
+          if (!names.contains(col.key)) {
+            debugPrint("Adding missing column: ${col.key}");
+            await db.execute('ALTER TABLE tasks ADD COLUMN ${col.key} ${col.value}');
+          }
+        }
+      }
+    );
+    return _db!;
+  }
+
   Future<void> fetchTasks() async {
-    final db = await _getDb();
-    _tasks = await db.query('tasks', orderBy: 'created_at DESC');
-    notifyListeners();
-  }
-
-  Future<void> addTask(String title, {String priority = 'low', DateTime? dueDate}) async {
-    final db = await _getDb();
-    final id = DateTime.now().millisecondsSinceEpoch;
-    await db.insert('tasks', {
-      'id': id.toString(),
-      'title': title,
-      'priority': priority,
-      'is_completed': 0,
-      'created_at': DateTime.now().toIso8601String(),
-      'due_date': dueDate?.toIso8601String(),
-    });
-    if (dueDate != null) { _scheduleNotification(id % 100000, title, dueDate); }
-    await fetchTasks();
-  }
-
-  Future<void> updateTask(String id, String title, {String priority = 'low', DateTime? dueDate}) async {
-    final db = await _getDb();
-    await db.update('tasks', {
-      'title': title,
-      'priority': priority,
-      'due_date': dueDate?.toIso8601String(),
-    }, where: 'id = ?', whereArgs: [id]);
-    
     try {
-      await flutterLocalNotificationsPlugin.cancel(int.parse(id) % 100000);
-    } catch (_) {}
-    
-    if (dueDate != null) {
-      _scheduleNotification(int.parse(id) % 100000, title, dueDate);
+      final db = await _getDb();
+      // Сортировка: сначала активные (is_completed = 0), потом выполненные (1), внутри групп по дате создания
+      _tasks = await db.query('tasks', orderBy: 'is_completed ASC, created_at DESC');
+      debugPrint("Fetched ${_tasks.length} tasks from database");
+      notifyListeners();
+    } catch (e) {
+      debugPrint("Fetch Tasks Error: $e");
     }
-    await fetchTasks();
+  }
+
+  Future<void> addTask(String title, {String description = '', String type = 'text', String subtasks = '[]', String priority = 'low', DateTime? dueDate}) async {
+    try {
+      final db = await _getDb();
+      final id = DateTime.now().millisecondsSinceEpoch.toString();
+      final data = {
+        'id': id,
+        'title': title,
+        'description': description,
+        'type': type,
+        'subtasks': subtasks,
+        'priority': priority,
+        'is_completed': 0,
+        'created_at': DateTime.now().toIso8601String(),
+        'due_date': dueDate?.toIso8601String(),
+      };
+      final res = await db.insert('tasks', data, conflictAlgorithm: ConflictAlgorithm.replace);
+      debugPrint("Added task result: $res | ID: $id");
+      if (dueDate != null) { _scheduleNotification(int.parse(id) % 100000, title, dueDate); }
+      await fetchTasks();
+    } catch (e) {
+      debugPrint("Add Task Error: $e");
+    }
+  }
+
+  Future<void> updateTask(String id, String title, {String description = '', String type = 'text', String subtasks = '[]', String priority = 'low', DateTime? dueDate}) async {
+    try {
+      final db = await _getDb();
+      final data = {
+        'title': title,
+        'description': description,
+        'type': type,
+        'subtasks': subtasks,
+        'priority': priority,
+        'due_date': dueDate?.toIso8601String(),
+      };
+      final res = await db.update('tasks', data, where: 'id = ?', whereArgs: [id]);
+      debugPrint("Updated task result: $res | ID: $id");
+      try { await flutterLocalNotificationsPlugin.cancel(int.parse(id) % 100000); } catch (_) {}
+      if (dueDate != null) { _scheduleNotification(int.parse(id) % 100000, title, dueDate); }
+      await fetchTasks();
+    } catch (e) {
+      debugPrint("Update Task Error: $e");
+    }
   }
 
   void _scheduleNotification(int notificationId, String title, DateTime date) async {
     final scheduledDate = tz.TZDateTime.from(date, tz.local);
     if (scheduledDate.isBefore(tz.TZDateTime.now(tz.local))) return;
-
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      notificationId,
-      'Do It: Внимание!',
-      title,
-      scheduledDate,
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'todo_push_v6',
-          'Важные уведомления',
-          channelDescription: 'Срочные пуш-уведомления со звуком',
-          importance: Importance.max,
-          priority: Priority.max,
-          playSound: true,
-          enableVibration: true,
-          ticker: 'Напоминание',
-          styleInformation: BigTextStyleInformation(''),
-          fullScreenIntent: true,
-          category: AndroidNotificationCategory.alarm,
-          visibility: NotificationVisibility.public,
-          audioAttributesUsage: AudioAttributesUsage.alarm,
-        ),
-      ),
+      notificationId, 'Do It: Внимание!', title, scheduledDate,
+      const NotificationDetails(android: AndroidNotificationDetails('todo_push_v6', 'Важные уведомления', channelDescription: 'Срочные пуш-уведомления со звуком', importance: Importance.max, priority: Priority.max, playSound: true, enableVibration: true, ticker: 'Напоминание', styleInformation: BigTextStyleInformation(''), fullScreenIntent: true, category: AndroidNotificationCategory.alarm, visibility: NotificationVisibility.public, audioAttributesUsage: AudioAttributesUsage.alarm)),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 
   Future<void> testNotification() async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'todo_push_v6',
-      'Важные уведомления',
-      channelDescription: 'Срочные пуш-уведомления со звуком',
-      importance: Importance.max,
-      priority: Priority.max,
-      playSound: true,
-      enableVibration: true,
-      fullScreenIntent: true,
-      audioAttributesUsage: AudioAttributesUsage.alarm,
-      category: AndroidNotificationCategory.alarm,
-    );
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-      999,
-      'Проверка звука',
-      'Если вы это слышите, значит пуш-уведомления настроены верно!',
-      platformChannelSpecifics,
-    );
+    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails('todo_push_v6', 'Важные уведомления', channelDescription: 'Срочные пуш-уведомления со звуком', importance: Importance.max, priority: Priority.max, playSound: true, enableVibration: true, fullScreenIntent: true, audioAttributesUsage: AudioAttributesUsage.alarm, category: AndroidNotificationCategory.alarm);
+    await flutterLocalNotificationsPlugin.show(999, 'Проверка звука', 'Если вы это слышите, значит пуш-уведомления настроены верно!', const NotificationDetails(android: androidPlatformChannelSpecifics));
   }
 
   Future<void> togglePriority(String id, String currentPriority) async {
@@ -1307,17 +1619,10 @@ class TodoProvider extends ChangeNotifier {
     await fetchTasks();
   }
 
-  Future<Database> _getDb() async {
-    final dbPath = await getDatabasesPath();
-    return openDatabase(
-      p.join(dbPath, 'todo_safe.db'),
-      version: 2,
-      onCreate: (db, v) {
-        db.execute('CREATE TABLE tasks(id TEXT PRIMARY KEY, title TEXT, is_completed INTEGER, priority TEXT, created_at TEXT, due_date TEXT)');
-      },
-      onUpgrade: (db, oldV, newV) {
-        if (oldV < 2) db.execute('ALTER TABLE tasks ADD COLUMN due_date TEXT');
-      }
-    );
+  Future<void> toggleSubtask(String taskId, int index) async {
+    final task = _tasks.firstWhere((t) => t['id'] == taskId);
+    List subtasks = jsonDecode(task['subtasks'] ?? '[]');
+    subtasks[index]['completed'] = !subtasks[index]['completed'];
+    await updateTask(taskId, task['title'], description: task['description'] ?? '', type: task['type'] ?? 'text', subtasks: jsonEncode(subtasks), priority: task['priority'], dueDate: task['due_date'] != null ? DateTime.parse(task['due_date']) : null);
   }
 }
